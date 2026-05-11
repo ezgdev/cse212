@@ -7,13 +7,12 @@ public static class Arrays
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
-    {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+     {
+        double[] results = new double[length]; // Step 1: Create an array of doubles with the size of 'length'
+        for (int i = 0; i < length; i++) {  // Step 2: Use a loop to fill the array with multiples of 'number'
+            results[i] = number * (i + 1);
+        }
+        return results; // Step 3: Return the filled array 
     }
 
     /// <summary>
@@ -25,9 +24,21 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        
+        int count = data.Count; // Step 1: Determine the effective rotation amount relative to the list size.
+        int shift = amount % count;
+
+        int[] rotated = new int[count]; // Step 2: Copy values into a temporary array at their rotated positions.
+        for (int i = 0; i < count; i++)
+        {
+            int newIndex = (i + shift) % count;
+            rotated[newIndex] = data[i];
+        }
+
+        for (int i = 0; i < count; i++) // Step 3: Copy rotated values back into the original list.
+        {
+            data[i] = rotated[i];
+        }
+        return ; 
     }
 }
