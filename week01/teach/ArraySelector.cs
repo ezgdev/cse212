@@ -27,6 +27,6 @@ public static class ArraySelector
                 index2++;
             }
         }
-        return result;
+        return result;  
     }
 }
