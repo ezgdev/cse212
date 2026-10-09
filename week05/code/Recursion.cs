@@ -14,8 +14,12 @@ public static class Recursion
     /// </summary>
     public static int SumSquaresRecursive(int n)
     {
-        // TODO Start Problem 1
+        // Base Case
+        if (n <= 0)
         return 0;
+
+        // Recursive Case
+        return n * n + SumSquaresRecursive(n - 1);
     }
 
     /// <summary>
@@ -39,7 +43,21 @@ public static class Recursion
     /// </summary>
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
-        // TODO Start Problem 2
+        // Base Case
+        if (word.Length == size)
+        {
+            results.Add(word);
+            return;
+        }
+
+        // Recursive Case
+        for (int i = 0; i < letters.Length; i++)
+        {
+            char letter = letters[i];
+            string remainingLetters = letters.Remove(i, 1);
+            
+            PermutationsChoose(results, remainingLetters, size, word + letter);
+        }
     }
 
     /// <summary>
@@ -118,7 +136,20 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
-        // TODO Start Problem 4
+        // Base Case
+        if (!pattern.Contains("*"))
+        {
+            results.Add(pattern);
+            return;
+        }
+
+        // Recursive Case
+        int index = pattern.IndexOf("*");
+        string patternWithZero = pattern.Substring(0, index) + "0" + pattern.Substring(index + 1);
+        string patternWithOne = pattern.Substring(0, index) + "1" + pattern.Substring(index + 1);
+
+        WildcardBinary(patternWithZero, results);
+        WildcardBinary(patternWithOne, results);
     }
 
     /// <summary>
@@ -132,12 +163,32 @@ public static class Recursion
         if (currPath == null) {
             currPath = new List<ValueTuple<int, int>>();
         }
-        
-        // currPath.Add((1,2)); // Use this syntax to add to the current path
 
-        // TODO Start Problem 5
-        // ADD CODE HERE
+        if (!maze.IsValidMove(currPath, x, y))
+        {
+            return;
+        }
 
-        // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+        if (currPath.Contains((x, y)))
+        {
+            return;
+        }
+
+        currPath.Add((x, y));
+
+        // Base Case
+        if (maze.IsEnd(x, y))
+        {   
+            results.Add(currPath.AsString());
+        }
+        else
+        {
+            SolveMaze(results, maze, x + 1, y, currPath);
+            SolveMaze(results, maze, x - 1, y, currPath);
+            SolveMaze(results, maze, x, y + 1, currPath);
+            SolveMaze(results, maze, x, y - 1, currPath);
+        }
+
+        currPath.RemoveAt(currPath.Count - 1);
     }
 }
